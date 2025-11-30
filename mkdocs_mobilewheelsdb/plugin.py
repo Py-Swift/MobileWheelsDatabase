@@ -84,16 +84,16 @@ class MobileWheelsPlugin(BasePlugin):
             
             # Get database URL (use plugin config or construct from base path)
             if self.config.get('database_url'):
-                db_url = self.config.get('database_url')
+                db_url = self.config.get('database_url').rstrip('/') + '/'
             else:
-                db_url = f'{base_path}/mobilewheels_assets' if base_path else '/mobilewheels_assets'
+                db_url = f'{base_path}/mobilewheels_assets/' if base_path else '/mobilewheels_assets/'
             
             # Inject script configuration and loader
             injection = f'''
 <script>
   window.MOBILEWHEELS_DB_URL = '{db_url}';
 </script>
-<script src="{db_url}/package-search.js"></script>
+<script src="{db_url}package-search.js"></script>
 '''
             
             # Append to existing HTML instead of replacing
