@@ -17,11 +17,10 @@ jobs:
       - name: Install Swiftly
         run: |
           curl -O https://download.swift.org/swiftly/darwin/swiftly.pkg
-          sudo installer -pkg swiftly.pkg -target CurrentUserHomeDirectory
-          ~/.swiftly/bin/swiftly init --quiet-shell-followup
-          . "${SWIFTLY_HOME_DIR:-$HOME/.swiftly}/env.sh"
-          hash -r
+          installer -pkg swiftly.pkg -target CurrentUserHomeDirectory
+          export PATH="$HOME/.swiftly/bin:$PATH"
           echo "$HOME/.swiftly/bin" >> $GITHUB_PATH
+          ~/.swiftly/bin/swiftly init --quiet-shell-followup
           swiftly --version
       
       - name: Install Swift 6.2.1 with WASM support
