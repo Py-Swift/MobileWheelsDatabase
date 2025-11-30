@@ -524,7 +524,7 @@
     
     const endTime = performance.now();
     const searchTime = ((endTime - startTime) / 1000).toFixed(2);
-    document.getElementById('search-time').textContent = `Found ${results.length} packages in ${searchTime}s (Swift + SQL)`;
+    document.getElementById('search-time').textContent = `Found ${results.length} packages in ${searchTime}s`;
     
     console.log(`📦 Search complete: ${results.length} results from Swift`);
     return results;
