@@ -69,8 +69,21 @@ class MobileWheelsPlugin(BasePlugin):
         
         # Only inject if page_path is configured and matches current page
         if page_path and page.file.src_path == f"{page_path}.md":
-            # Get database URL (use plugin config or default to relative path)
-            db_url = self.config.get('database_url') or '/mobilewheels_assets'
+            # Get the base URL from config (handles sites with base paths like /Py-Swift/)
+            base_url = config.get('site_url', '').rstrip('/')
+            if base_url:
+                # Extract just the path component if it's a full URL
+                from urllib.parse import urlparse
+                parsed = urlparse(base_url)
+                base_path = parsed.path.rstrip('/')
+            else:
+                base_path = ''
+            
+            # Get database URL (use plugin config or construct from base path)
+            if self.config.get('database_url'):
+                db_url = self.config.get('database_url')
+            else:
+                db_url = f'{base_path}/mobilewheels_assets' if base_path else '/mobilewheels_assets'
             
             # Inject script configuration and loader
             injection = f'''
