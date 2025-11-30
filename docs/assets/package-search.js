@@ -2,7 +2,15 @@
 // Mobile platform support database for 714,850+ Python packages
 
 (async () => {
-  const DB_BASE_URL = window.MOBILEWHEELS_DB_URL || '../assets/';
+  // Auto-detect base URL from script location or use window config
+  const DB_BASE_URL = window.MOBILEWHEELS_DB_URL || (() => {
+    const scripts = document.querySelectorAll('script[src*="package-search.js"]');
+    if (scripts.length > 0) {
+      const scriptSrc = scripts[0].src;
+      return scriptSrc.substring(0, scriptSrc.lastIndexOf('/') + 1);
+    }
+    return '../assets/';
+  })();
   const RESULTS_PER_PAGE = 50;
   
   let SQL = null;
