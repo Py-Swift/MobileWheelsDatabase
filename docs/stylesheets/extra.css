@@ -1,0 +1,26 @@
+/* Custom styles for Swift WASM demo */
+
+/* Ensure script tags work properly */
+script {
+  display: none !important;
+}
+
+/* Better contrast for dark mode */
+[data-md-color-scheme="slate"] {
+  --md-code-bg-color: #1e1e1e;
+}
+
+/* Search result animations */
+.results-table tr {
+  transition: background-color 0.2s ease;
+}
+
+/* Better spacing for tabs */
+.tabs {
+  margin: 2rem 0;
+}
+
+/* Progress bar glow effect */
+.progress-fill {
+  box-shadow: 0 0 10px var(--md-accent-fg-color);
+}

@@ -1,0 +1,44 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:MobileWheelsDatabase}",
+            "name": "Debug MobileWheelsDatabaseWasm",
+            "target": "MobileWheelsDatabaseWasm",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug MobileWheelsDatabaseWasm"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:MobileWheelsDatabase}",
+            "name": "Release MobileWheelsDatabaseWasm",
+            "target": "MobileWheelsDatabaseWasm",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release MobileWheelsDatabaseWasm"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:MobileWheelsDatabase}",
+            "name": "Debug TestSQLite",
+            "target": "TestSQLite",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug TestSQLite"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:MobileWheelsDatabase}",
+            "name": "Release TestSQLite",
+            "target": "TestSQLite",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release TestSQLite"
+        }
+    ]
+}

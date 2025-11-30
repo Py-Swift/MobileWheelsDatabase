@@ -1,0 +1,27 @@
+[project]
+name = "db-runner"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "PythonSwiftLink", email = "pythonswiftlink@gmail.com" }
+]
+requires-python = ">=3.13.0"
+dependencies = [
+    "installer>=0.7.0",
+    "mkdocs-material>=9.5.50",
+    "mkdocs-table-reader-plugin>=3.1.0",
+    "mkdocstrings-python>=1.13.0",
+    "pymdown-extensions>=10.3",
+]
+
+[project.scripts]
+db-server = "db_runner:main"
+
+[tool.uv]
+package = true
+
+[tool.setuptools]
+py-modules = ["db_runner"]
+
+

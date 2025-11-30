@@ -1,0 +1,9 @@
+.DS_Store
+.build/
+*.xcodeproj
+*.swiftpm
+DerivedData/
+.swiftpm/
+*.wasm
+*.js.map
+node_modules/
