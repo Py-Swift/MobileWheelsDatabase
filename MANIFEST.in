@@ -1,0 +1,4 @@
+include README.md
+include LICENSE
+recursive-include mkdocs_mobilewheels/assets *.js *.wasm *.sqlite
+recursive-include mkdocs_mobilewheels/templates *.html

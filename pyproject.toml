@@ -1,19 +1,26 @@
 [project]
-name = "db-runner"
+name = "mkdocs-mobilewheels"
 version = "0.1.0"
-description = "Add your description here"
-readme = "README.md"
+description = "MkDocs plugin for Python package compatibility search with WASM-powered SQLite"
+readme = "PLUGIN_README.md"
 authors = [
     { name = "PythonSwiftLink", email = "pythonswiftlink@gmail.com" }
 ]
-requires-python = ">=3.13.0"
+requires-python = ">=3.8"
 dependencies = [
-    "installer>=0.7.0",
+    "mkdocs>=1.4.0",
+]
+
+[project.optional-dependencies]
+dev = [
     "mkdocs-material>=9.5.50",
     "mkdocs-table-reader-plugin>=3.1.0",
     "mkdocstrings-python>=1.13.0",
     "pymdown-extensions>=10.3",
 ]
+
+[project.entry-points."mkdocs.plugins"]
+mobilewheels = "mkdocs_mobilewheels.plugin:MobileWheelsPlugin"
 
 [project.scripts]
 db-server = "db_runner:main"
@@ -23,5 +30,7 @@ package = true
 
 [tool.setuptools]
 py-modules = ["db_runner"]
+packages = ["mkdocs_mobilewheels"]
+package-data = { mkdocs_mobilewheels = ["assets/*", "templates/*"] }
 
 

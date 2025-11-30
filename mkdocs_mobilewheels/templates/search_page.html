@@ -1,0 +1,162 @@
+<!-- MobileWheels Package Search Interface -->
+<style>
+    .search-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    
+    .search-box {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 16px;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+    
+    .search-box:focus {
+        outline: none;
+        border-color: #4CAF50;
+    }
+    
+    .tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #ddd;
+    }
+    
+    .tab {
+        padding: 10px 20px;
+        cursor: pointer;
+        border: none;
+        background: none;
+        font-size: 16px;
+        color: #666;
+        border-bottom: 3px solid transparent;
+        transition: all 0.3s;
+    }
+    
+    .tab.active {
+        color: #4CAF50;
+        border-bottom-color: #4CAF50;
+    }
+    
+    .tab-content {
+        display: none;
+    }
+    
+    .tab-content.active {
+        display: block;
+    }
+    
+    .results-container {
+        margin-top: 20px;
+    }
+    
+    .result-item {
+        padding: 15px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: white;
+    }
+    
+    .package-name {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 8px;
+    }
+    
+    .package-meta {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        font-size: 14px;
+    }
+    
+    .badge {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-weight: 500;
+    }
+    
+    .badge-success { background: #d4edda; color: #155724; }
+    .badge-warning { background: #fff3cd; color: #856404; }
+    .badge-danger { background: #f8d7da; color: #721c24; }
+    .badge-info { background: #d1ecf1; color: #0c5460; }
+    
+    .loading {
+        text-align: center;
+        padding: 40px;
+        color: #666;
+    }
+    
+    .file-upload-area {
+        border: 2px dashed #ddd;
+        border-radius: 8px;
+        padding: 40px;
+        text-align: center;
+        margin-bottom: 20px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    
+    .file-upload-area:hover,
+    .file-upload-area.drag-over {
+        border-color: #4CAF50;
+        background: #f0f8f0;
+    }
+    
+    .analyze-button {
+        padding: 12px 24px;
+        background: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 10px;
+    }
+    
+    .analyze-button:hover {
+        background: #45a049;
+    }
+    
+    .analyze-button:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+    }
+</style>
+
+<div class="search-container">
+    <div class="tabs">
+        <button class="tab active" data-tab="search">🔍 Search Packages</button>
+        <button class="tab" data-tab="analyze">📋 Analyze Requirements</button>
+    </div>
+    
+    <div id="search-tab" class="tab-content active">
+        <input type="text" id="searchInput" class="search-box" placeholder="Search for Python packages...">
+        <div id="searchStatus" class="loading">Loading database...</div>
+        <div id="searchResults" class="results-container"></div>
+    </div>
+    
+    <div id="analyze-tab" class="tab-content">
+        <div class="file-upload-area" id="dropZone">
+            <p>📁 Drop your requirements.txt file here</p>
+            <p style="color: #666; font-size: 14px;">or click to select file</p>
+            <input type="file" id="fileInput" accept=".txt" style="display: none;">
+        </div>
+        <button id="analyzeButton" class="analyze-button" disabled>Analyze Requirements</button>
+        <div id="analyzeStatus"></div>
+        <div id="analyzeResults" class="results-container"></div>
+    </div>
+</div>
+
+<script src="{{DATABASE_URL}}/package-search.js"></script>
+<script>
+    // Update the database URL for the search script
+    window.MOBILEWHEELS_DB_URL = '{{DATABASE_URL}}';
+</script>
