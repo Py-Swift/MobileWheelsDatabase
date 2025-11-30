@@ -36,7 +36,7 @@ jobs:
       
       - name: Build WASM
         run: |
-          swift build --swift-sdk swift-6.2.1-RELEASE_wasm -c release --product MobileWheelsDatabaseWasm
+          swift build --swift-sdk swift-6.2.1-RELEASE_wasm -c release --product MobileWheelsDatabaseWasm -Xswiftc -Xclang-linker -Xswiftc -mexec-model=reactor
           ls -lh .build/wasm32-unknown-wasip1/release/
       
       - name: Prepare release assets
