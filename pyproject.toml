@@ -10,13 +10,6 @@ requires-python = ">=3.13"
 dependencies = [
     "mkdocs>=1.4.0",
     "mkdocs-material>=9.7.0",
-]
-
-[project.optional-dependencies]
-dev = [
-    "mkdocs-material>=9.5.50",
-    "mkdocs-table-reader-plugin>=3.1.0",
-    "mkdocstrings-python>=1.13.0",
     "pymdown-extensions>=10.3",
 ]
 
