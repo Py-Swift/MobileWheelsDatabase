@@ -97,7 +97,7 @@ final class IndexDatabases {
         return results
     }
     
-    /// Batch lookup packages by exact names
+    /// Batch lookup packages by exact names (case-insensitive)
     func lookupPackages(names: [String]) -> [IndexResult] {
         var results: [IndexResult] = []
         
@@ -109,7 +109,8 @@ final class IndexDatabases {
             
             let escapedNames = batch.map { "'\($0.replacingOccurrences(of: "'", with: "''"))'" }
             let namesList = escapedNames.joined(separator: ",")
-            let indexSQL = "SELECT name, hash_id, chunk_file FROM package_index WHERE name IN (\(namesList))"
+            // Use LOWER() for case-insensitive matching
+            let indexSQL = "SELECT name, hash_id, chunk_file FROM package_index WHERE LOWER(name) IN (\(namesList))"
             
             // Query both indexes
             if let db = index1Db {
