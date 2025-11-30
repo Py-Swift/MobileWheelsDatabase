@@ -1,0 +1,5 @@
+[console_scripts]
+db-server = db_runner:main
+
+[mkdocs.plugins]
+mobilewheels = mkdocs_mobilewheels.plugin:MobileWheelsPlugin
