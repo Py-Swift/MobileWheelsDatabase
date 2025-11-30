@@ -11,3 +11,5 @@ __pycache__/
 *.pyc
 db_runner.egg-info/
 .venv/
+dist/
+*.egg-info/

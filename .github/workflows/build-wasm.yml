@@ -1,0 +1,43 @@
+name: Build and Release WASM
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build-wasm:
+    runs-on: macos-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Install SwiftWasm toolchain
+        run: |
+          curl -L https://github.com/swiftwasm/swift/releases/download/swift-wasm-6.2.1-RELEASE/swift-wasm-6.2.1-RELEASE-macos_x86_64.pkg -o swift-wasm.pkg
+          sudo installer -pkg swift-wasm.pkg -target /
+          export PATH="/Library/Developer/Toolchains/swift-wasm-6.2.1-RELEASE.xctoolchain/usr/bin:$PATH"
+          swift --version
+      
+      - name: Build WASM
+        run: |
+          export PATH="/Library/Developer/Toolchains/swift-wasm-6.2.1-RELEASE.xctoolchain/usr/bin:$PATH"
+          swift build --swift-sdk swift-6.2.1-RELEASE_wasm -c release --product MobileWheelsDatabaseWasm
+          ls -lh .build/wasm32-unknown-wasip1/release/
+      
+      - name: Prepare release assets
+        run: |
+          mkdir -p release-assets
+          cp .build/wasm32-unknown-wasip1/release/MobileWheelsDatabaseWasm.wasm release-assets/MobileWheelsDatabase.wasm
+          ls -lh release-assets/
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: release-assets/MobileWheelsDatabase.wasm
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

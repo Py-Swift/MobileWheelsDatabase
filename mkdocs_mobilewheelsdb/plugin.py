@@ -6,6 +6,7 @@ Adds a Python package compatibility search page to MkDocs sites.
 
 import os
 import shutil
+import urllib.request
 from pathlib import Path
 from mkdocs.config import config_options
 from mkdocs.plugins import BasePlugin
@@ -17,10 +18,11 @@ class MobileWheelsPlugin(BasePlugin):
     
     Usage in mkdocs.yml:
         plugins:
-          - mobilewheels:
+          - mobilewheelsdb:
               database_url: "https://example.com/database"  # Optional: custom database location
-              page_path: "package-search"  # Optional: custom page path (default: package-search)
+              page_path: "package-search"  # Optional: custom page path
               page_title: "Package Search"  # Optional: custom page title
+              wasm_release: "latest"  # Optional: GitHub release tag (default: latest)
     """
     
     config_scheme = (
@@ -28,6 +30,7 @@ class MobileWheelsPlugin(BasePlugin):
         ('page_path', config_options.Type(str, default=None)),
         ('page_title', config_options.Type(str, default='Python Package Compatibility Search')),
         ('include_in_nav', config_options.Type(bool, default=True)),
+        ('wasm_release', config_options.Type(str, default='latest')),
     )
     
     def on_config(self, config):
@@ -100,17 +103,39 @@ class MobileWheelsPlugin(BasePlugin):
     
     def on_post_build(self, config):
         """
-        Copy assets to the final site directory.
+        Copy assets to the final site directory and download WASM from GitHub releases.
         """
         site_dir = Path(config['site_dir'])
         target_assets = site_dir / 'mobilewheels_assets'
         target_assets.mkdir(exist_ok=True)
         
-        # Copy all assets
+        # Copy all assets except WASM (databases and JS)
         if self.assets_dir.exists():
             for item in self.assets_dir.iterdir():
-                if item.is_file():
+                if item.is_file() and not item.name.endswith('.wasm'):
                     target_file = target_assets / item.name
                     shutil.copy2(item, target_file)
+        
+        # Download WASM from GitHub releases
+        wasm_path = target_assets / 'MobileWheelsDatabase.wasm'
+        if not wasm_path.exists():
+            release_tag = self.config.get('wasm_release', 'latest')
+            wasm_url = f'https://github.com/Py-Swift/MobileWheelsDatabase/releases/{release_tag}/download/MobileWheelsDatabase.wasm'
+            
+            print(f'Downloading WASM from GitHub release ({release_tag})...')
+            try:
+                urllib.request.urlretrieve(wasm_url, wasm_path)
+                print(f'✓ WASM downloaded successfully ({wasm_path.stat().st_size / 1024 / 1024:.1f} MB)')
+            except Exception as e:
+                print(f'Warning: Failed to download WASM from release: {e}')
+                print('Checking for bundled WASM...')
+                
+                # Fallback: check if WASM is bundled in assets
+                bundled_wasm = self.assets_dir / 'MobileWheelsDatabase.wasm'
+                if bundled_wasm.exists():
+                    shutil.copy2(bundled_wasm, wasm_path)
+                    print('✓ Using bundled WASM')
+                else:
+                    print('ERROR: No WASM file available. Please build or download manually.')
         
         return None
