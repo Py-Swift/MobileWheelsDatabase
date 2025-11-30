@@ -1,5 +1,5 @@
 [project]
-name = "mkdocs-mobilewheels"
+name = "mkdocs-mobilewheelsdb"
 version = "0.1.0"
 description = "MkDocs plugin for Python package compatibility search with WASM-powered SQLite"
 readme = "PLUGIN_README.md"
@@ -14,7 +14,7 @@ dependencies = [
 ]
 
 [project.entry-points."mkdocs.plugins"]
-mobilewheels = "mkdocs_mobilewheels.plugin:MobileWheelsPlugin"
+mobilewheelsdb = "mkdocs_mobilewheelsdb.plugin:MobileWheelsPlugin"
 
 [project.scripts]
 db-server = "db_runner:main"
@@ -24,7 +24,7 @@ package = true
 
 [tool.setuptools]
 py-modules = ["db_runner"]
-packages = ["mkdocs_mobilewheels"]
-package-data = { mkdocs_mobilewheels = ["assets/*", "templates/*"] }
+packages = ["mkdocs_mobilewheelsdb"]
+package-data = { mkdocs_mobilewheelsdb = ["assets/*", "templates/*"] }
 
 
