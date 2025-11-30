@@ -1,5 +1,9 @@
-site_name: Swift WASM SQLite Test
-site_description: Testing Swift WASM with SQLite for package search
+site_name: MobileWheels Database
+site_description: Python package compatibility search for iOS and Android with WASM-powered SQLite
+site_url: https://py-swift.github.io/MobileWheelsDatabase/
+repo_url: https://github.com/Py-Swift/MobileWheelsDatabase
+repo_name: Py-Swift/MobileWheelsDatabase
+
 theme:
   name: material
   palette:
