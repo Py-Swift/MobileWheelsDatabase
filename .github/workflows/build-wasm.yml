@@ -14,17 +14,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       
-      - name: Install SwiftWasm toolchain
+      - name: Install SwiftWasm SDK
         run: |
-          curl -L https://github.com/swiftwasm/swift/releases/download/swift-wasm-6.2.1-RELEASE/swift-wasm-6.2.1-RELEASE-macos_x86_64.pkg -o swift-wasm.pkg
-          sudo installer -pkg swift-wasm.pkg -target /
-          export PATH="/Library/Developer/Toolchains/swift-wasm-6.2.1-RELEASE.xctoolchain/usr/bin:$PATH"
-          swift --version
+          # Install latest SwiftWasm SDK using swift sdk install
+          swift sdk install https://github.com/swiftwasm/swift/releases/download/swift-wasm-DEVELOPMENT-SNAPSHOT-2025-11-25-a/swift-wasm-DEVELOPMENT-SNAPSHOT-2025-11-25-a-wasm32-unknown-wasip1.artifactbundle.zip --checksum 16dcf39246733cdd1cdd94fa2542d1c0d6eb6241d642f549e6c52d3941a6885d
+          swift sdk list
       
       - name: Build WASM
         run: |
-          export PATH="/Library/Developer/Toolchains/swift-wasm-6.2.1-RELEASE.xctoolchain/usr/bin:$PATH"
-          swift build --swift-sdk swift-6.2.1-RELEASE_wasm -c release --product MobileWheelsDatabaseWasm
+          swift build --swift-sdk wasm32-unknown-wasip1 -c release --product MobileWheelsDatabaseWasm
           ls -lh .build/wasm32-unknown-wasip1/release/
       
       - name: Prepare release assets
