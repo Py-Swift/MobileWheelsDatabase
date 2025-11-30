@@ -6,9 +6,10 @@ readme = "PLUGIN_README.md"
 authors = [
     { name = "PythonSwiftLink", email = "pythonswiftlink@gmail.com" }
 ]
-requires-python = ">=3.8"
+requires-python = ">=3.13"
 dependencies = [
     "mkdocs>=1.4.0",
+    "mkdocs-material>=9.7.0",
 ]
 
 [project.optional-dependencies]
