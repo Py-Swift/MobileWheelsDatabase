@@ -31,18 +31,18 @@ jobs:
       
       - name: Install WASM SDK
         run: |
-          swift sdk install https://download.swift.org/swift-6.2.1-release/static-sdk/swift-6.2.1-RELEASE/swift-6.2.1-RELEASE_static-linux-0.0.1.artifactbundle.zip
+          swift sdk install https://download.swift.org/swift-6.2.1-release/wasm-sdk/swift-6.2.1-RELEASE/swift-6.2.1-RELEASE_wasm.artifactbundle.tar.gz --checksum 482b9f95462b87bedfafca94a092cf9ec4496671ca13b43745097122d20f18af
           swift sdk list
       
       - name: Build WASM
         run: |
-          swift build --swift-sdk wasm32-unknown-wasi -c release --product MobileWheelsDatabaseWasm
-          ls -lh .build/wasm32-unknown-wasi/release/
+          swift build --swift-sdk swift-6.2.1-RELEASE_wasm -c release --product MobileWheelsDatabaseWasm
+          ls -lh .build/wasm32-unknown-wasip1/release/
       
       - name: Prepare release assets
         run: |
           mkdir -p release-assets
-          cp .build/wasm32-unknown-wasi/release/MobileWheelsDatabaseWasm.wasm release-assets/MobileWheelsDatabase.wasm
+          cp .build/wasm32-unknown-wasip1/release/MobileWheelsDatabaseWasm.wasm release-assets/MobileWheelsDatabase.wasm
           ls -lh release-assets/
       
       - name: Create Release
