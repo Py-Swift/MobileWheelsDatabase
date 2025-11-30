@@ -14,14 +14,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       
-      - name: Setup Swift 6.2.1
-        uses: swift-actions/setup-swift@v2
-        with:
-          swift-version: '6.2.1'
-      
-      - name: Install SwiftWasm SDK
+      - name: Install Swiftly
         run: |
-          # Install official Swift 6.2.1 WASM SDK
+          curl -L https://swift-server.github.io/swiftly/swiftly-install.sh | bash
+          export PATH="$HOME/.local/bin:$PATH"
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+      
+      - name: Install Swift 6.2.1 with WASM support
+        run: |
+          swiftly install 6.2.1
+          swiftly use 6.2.1
+          swift --version
+      
+      - name: Install WASM SDK
+        run: |
           swift sdk install https://download.swift.org/swift-6.2.1-release/static-sdk/swift-6.2.1-RELEASE/swift-6.2.1-RELEASE_static-linux-0.0.1.artifactbundle.zip
           swift sdk list
       
