@@ -170,7 +170,7 @@ wget -O docs/mobilewheels_assets/MobileWheelsDatabase.wasm \
 ### Plugin Not Found
 ```bash
 # Verify installation
-pip show mkdocs-mobilewheels
+pip show mkdocs-mobilewheelsdb-plugin
 
 # Reinstall if needed
 pip install --force-reinstall git+https://github.com/Py-Swift/MobileWheelsDatabase.git
