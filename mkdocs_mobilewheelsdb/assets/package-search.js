@@ -2,7 +2,7 @@
 // Mobile platform support database for 714,850+ Python packages
 
 (async () => {
-  const DB_BASE_URL = '../assets/';
+  const DB_BASE_URL = window.MOBILEWHEELS_DB_URL || '../assets/';
   const RESULTS_PER_PAGE = 50;
   
   let SQL = null;

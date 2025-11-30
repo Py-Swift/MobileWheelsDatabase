@@ -25,7 +25,7 @@ class MobileWheelsPlugin(BasePlugin):
     
     config_scheme = (
         ('database_url', config_options.Type(str, default=None)),
-        ('page_path', config_options.Type(str, default='package-search')),
+        ('page_path', config_options.Type(str, default=None)),
         ('page_title', config_options.Type(str, default='Python Package Compatibility Search')),
         ('include_in_nav', config_options.Type(bool, default=True)),
     )
@@ -63,25 +63,25 @@ class MobileWheelsPlugin(BasePlugin):
     
     def on_page_content(self, html, page, config, files):
         """
-        Inject the search interface if this is the package search page.
+        Inject the search scripts if this is the package search page.
         """
-        page_path = self.config.get('page_path', 'package-search')
+        page_path = self.config.get('page_path')
         
-        # Check if this is the package search page
-        if page.file.src_path == f"{page_path}.md" or page.title == self.config.get('page_title'):
+        # Only inject if page_path is configured and matches current page
+        if page_path and page.file.src_path == f"{page_path}.md":
             # Get database URL (use plugin config or default to relative path)
             db_url = self.config.get('database_url') or '/mobilewheels_assets'
             
-            # Read the search page template
-            template_path = self.plugin_dir / 'templates' / 'search_page.html'
-            if template_path.exists():
-                with open(template_path, 'r', encoding='utf-8') as f:
-                    search_html = f.read()
-                
-                # Replace placeholder with actual database URL
-                search_html = search_html.replace('{{DATABASE_URL}}', db_url)
-                
-                return search_html
+            # Inject script configuration and loader
+            injection = f'''
+<script>
+  window.MOBILEWHEELS_DB_URL = '{db_url}';
+</script>
+<script src="{db_url}/package-search.js"></script>
+'''
+            
+            # Append to existing HTML instead of replacing
+            return html + injection
         
         return html
     
