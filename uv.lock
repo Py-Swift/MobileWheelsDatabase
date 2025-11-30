@@ -269,7 +269,7 @@ wheels = [
 ]
 
 [[package]]
-name = "mkdocs-mobilewheels"
+name = "mkdocs-mobilewheelsdb-plugin"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
