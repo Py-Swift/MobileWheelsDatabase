@@ -7,3 +7,7 @@ DerivedData/
 *.wasm
 *.js.map
 node_modules/
+__pycache__/
+*.pyc
+db_runner.egg-info/
+.venv/
