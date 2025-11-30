@@ -15,10 +15,12 @@ private let indexDatabases = IndexDatabases()
 private var jsonOutputBuffer: [UInt8] = [] // Swift-managed output buffer separate from WASM memory
 
 private func log(_ message: String) {
+    #if DEBUG
     let utf8 = Array(message.utf8)
     utf8.withUnsafeBufferPointer { ptr in
         consoleLog(ptr.baseAddress!, Int32(utf8.count))
     }
+    #endif
 }
 
 // Initialize Swift WASM and load SQLite database from memory
