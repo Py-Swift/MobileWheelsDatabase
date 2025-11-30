@@ -280,11 +280,13 @@
             }
             
             const queryBytes = new TextEncoder().encode(query);
-            const queryMemory = new Uint8Array(instance.exports.memory.buffer);
-            queryMemory.set(queryBytes, 0);
-            
-            const outputOffset = 314572800;
+            const inputOffset = 50 * 1024 * 1024;  // 50MB for input
+            const outputOffset = 314572800;  // 300MB for output
             const outputSize = 10 * 1024 * 1024;
+            
+            // Write input to memory
+            let queryMemory = new Uint8Array(instance.exports.memory.buffer);
+            queryMemory.set(queryBytes, inputOffset);
             
             console.log(`📞 Starting incremental search...`);
             
@@ -292,7 +294,11 @@
             let maxRetries = 20;
             
             while (maxRetries-- > 0) {
-              bytesWritten = instance.exports.swiftSearch(0, queryBytes.length, outputOffset, outputSize);
+              // Refresh memory view in case it grew
+              queryMemory = new Uint8Array(instance.exports.memory.buffer);
+              queryMemory.set(queryBytes, inputOffset);
+              
+              bytesWritten = instance.exports.swiftSearch(inputOffset, queryBytes.length, outputOffset, outputSize);
               console.log(`📞 swiftSearch returned: ${bytesWritten} bytes`);
               
               if (bytesWritten <= 0) {
@@ -352,19 +358,22 @@
             
             const namesJson = JSON.stringify(packageNames);
             const namesBytes = new TextEncoder().encode(namesJson);
-            const queryMemory = new Uint8Array(instance.exports.memory.buffer);
-            queryMemory.set(namesBytes, 0);
-            
-            const outputOffset = 314572800;
+            const inputOffset = 50 * 1024 * 1024;  // 50MB for input
+            const outputOffset = 314572800;  // 300MB for output
             const outputSize = 10 * 1024 * 1024;
             
             console.log(`📞 Starting batch lookup with chunk loading...`);
+            console.log(`📊 Input size: ${namesBytes.length} bytes, JSON: ${namesJson.substring(0, 100)}...`);
             
             let bytesWritten;
             let maxRetries = 20;
             
             while (maxRetries-- > 0) {
-              bytesWritten = instance.exports.swiftBatchLookup(0, namesBytes.length, outputOffset, outputSize);
+              // Refresh memory view and write input
+              const queryMemory = new Uint8Array(instance.exports.memory.buffer);
+              queryMemory.set(namesBytes, inputOffset);
+              
+              bytesWritten = instance.exports.swiftBatchLookup(inputOffset, namesBytes.length, outputOffset, outputSize);
               console.log(`📞 swiftBatchLookup returned: ${bytesWritten} bytes`);
               
               if (bytesWritten <= 0) {
