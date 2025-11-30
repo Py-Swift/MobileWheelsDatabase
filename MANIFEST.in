@@ -1,4 +1,4 @@
-include README.md
+include USAGE.md
 include LICENSE
-recursive-include mkdocs_mobilewheels/assets *.js *.wasm *.sqlite
-recursive-include mkdocs_mobilewheels/templates *.html
+recursive-include mkdocs_mobilewheelsdb/assets *.js *.wasm *.sqlite
+recursive-include mkdocs_mobilewheelsdb/templates *.html
