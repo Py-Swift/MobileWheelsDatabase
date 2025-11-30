@@ -1,5 +1,5 @@
 [project]
-name = "mkdocs-mobilewheelsdb"
+name = "mkdocs-mobilewheelsdb-plugin"
 version = "0.1.0"
 description = "MkDocs plugin for Python package compatibility search with WASM-powered SQLite"
 readme = "PLUGIN_README.md"
