@@ -58,7 +58,7 @@
       console.log('🚀 Starting Swift WASM load...');
       console.log('📍 Current page:', window.location.href);
       
-      const wasmPath = '../assets/MobileWheelsDatabase.wasm';
+      const wasmPath = `${DB_BASE_URL}MobileWheelsDatabase.wasm`;
       console.log('📦 Fetching WASM from:', wasmPath);
       const wasmResponse = await fetch(wasmPath);
       
