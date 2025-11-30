@@ -14,21 +14,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       
+      - name: Setup Swift 6.2.1
+        uses: swift-actions/setup-swift@v2
+        with:
+          swift-version: '6.2.1'
+      
       - name: Install SwiftWasm SDK
         run: |
-          # Install latest SwiftWasm SDK using swift sdk install
-          swift sdk install https://github.com/swiftwasm/swift/releases/download/swift-wasm-DEVELOPMENT-SNAPSHOT-2025-11-25-a/swift-wasm-DEVELOPMENT-SNAPSHOT-2025-11-25-a-wasm32-unknown-wasip1.artifactbundle.zip --checksum 16dcf39246733cdd1cdd94fa2542d1c0d6eb6241d642f549e6c52d3941a6885d
+          # Install official Swift 6.2.1 WASM SDK
+          swift sdk install https://download.swift.org/swift-6.2.1-release/static-sdk/swift-6.2.1-RELEASE/swift-6.2.1-RELEASE_static-linux-0.0.1.artifactbundle.zip
           swift sdk list
       
       - name: Build WASM
         run: |
-          swift build --swift-sdk wasm32-unknown-wasip1 -c release --product MobileWheelsDatabaseWasm
-          ls -lh .build/wasm32-unknown-wasip1/release/
+          swift build --swift-sdk wasm32-unknown-wasi -c release --product MobileWheelsDatabaseWasm
+          ls -lh .build/wasm32-unknown-wasi/release/
       
       - name: Prepare release assets
         run: |
           mkdir -p release-assets
-          cp .build/wasm32-unknown-wasip1/release/MobileWheelsDatabaseWasm.wasm release-assets/MobileWheelsDatabase.wasm
+          cp .build/wasm32-unknown-wasi/release/MobileWheelsDatabaseWasm.wasm release-assets/MobileWheelsDatabase.wasm
           ls -lh release-assets/
       
       - name: Create Release
