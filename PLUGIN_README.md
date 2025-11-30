@@ -21,7 +21,7 @@ pip install git+https://github.com/Py-Swift/MobileWheelsDatabase.git
 ### From PyPI (Coming Soon)
 
 ```bash
-pip install mkdocs-mobilewheels
+pip install mkdocs-mobilewheelsdb-plugin
 ```
 
 ## Usage
